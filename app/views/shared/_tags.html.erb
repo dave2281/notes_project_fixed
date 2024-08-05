@@ -1,0 +1,27 @@
+<% tag_list = [] %>
+
+<div class="container">
+  <div class="row">
+    <div class="col text-start"> <!-- Класс text-start выравнивает текст кнопки влево -->
+      <button class="btn btn-primary rounded-3 h-auto w-auto mx-3 my-3" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">All Tags</button>
+    </div>
+    <div class="col text-end"> <!-- Класс text-end выравнивает текст кнопки вправо -->
+      <%= link_to "New note", new_note_path, class: "btn btn-primary rounded-3 h-auto w-auto mx-3 my-3" %>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Tags</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container text-center">
+      <div class="row row-cols-2">
+
+      </div>
+    </div>
+  </div>
+</div>

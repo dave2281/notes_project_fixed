@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg bg-light border-bottom border-body">
+  <div class="container-fluid">
+    <%= link_to 'Notes', root_path, class: 'navbar-brand fw-bold fs-4'%>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to 'Home', root_path, class: 'nav-link active' %>
+        </li>
+        <li class="nav-item">
+        </li>
+      </ul>
+      <ul class="navbar-nav me-1 mb-2 mb-lg-0">
+        <li class="btn-group dropdown">
+          <button class="dropdown-toggle w-auto h-auto d-inline-block border border-0" style="background-color: #f8f9fb;"
+                  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Links
+          </button>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Profile", user_path(current_user), class: "dropdown-item" %></li>
+            <li><a class="dropdown-item" href="#" aria-current="true">Active link</a></li>
+            <li></li>
+          </ul>
+        </li>
+      </ul>
+      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+    </div>
+  </div>
+</nav>

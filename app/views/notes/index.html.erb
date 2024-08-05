@@ -1,0 +1,30 @@
+<% if current_user.note_ids.present? %>
+  <div style="margin-right: 0; margin-left: auto;" class="row row-cols-1 row-cols-md-4 g-2 mb-3 mt-2">
+    <% @notes.each do |note| %>
+      <% if note.user_id == current_user.id %>
+        <div class="col">
+          <div class="card rounded-3 h-auto w-auto mx-2 my-2">
+            <div class="card-body">
+              <h3 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%; color:<%= note.color %>;"><%= note.title %></h3>
+              <p class="card-text markdown-preview" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;"><%= sanitize(note.text, tags: %w(strong em br)) %></p>
+              <% if note.tags.present? %>
+                <p class="tags" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;">#<%= tags_fixer(note) %></p>
+              <% else %>
+                <p class="tags" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;">No tags</p>
+              <% end %>
+
+              <div class="d-flex justify-content-between">
+                <%= link_to 'Edit Note', edit_note_path(note), class: 'text-decoration-none text-body-secondary' %> <%= link_to 'Delete note', note_path(note), class: "text-decoration-none text-body-secondary", method: :delete, data: { confirm: 'Are you sure?' } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="container h-auto w-auto">
+    <p class="text-center fs-1">You have nothing here!</p>
+    <p class="text-center form-text fs-6 ">Add some notes.</p>
+  </div>
+<% end %>

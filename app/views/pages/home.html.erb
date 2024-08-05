@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+</head>
+<body>
+<% if alert.present? %>
+  <p class="alert alert-success"><%= alert %></p>
+<% end %>
+
+<div id="no_body_styles">
+  <%= render partial: 'shared/tags', locals: {tags: @tags} %>
+
+  <br>
+
+  <%= render 'notes/index' %>
+</div>
+
+
+</body>
+</html>
