@@ -2,3 +2,7 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import "bootstrap"
+import "./tinymce_init"
+import { UJS } from "@rails/ujs";
+
+UJS.start();

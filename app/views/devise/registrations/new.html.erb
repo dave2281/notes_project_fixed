@@ -1,0 +1,37 @@
+
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <% if alert.present? %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
+  <div class="card position-absolute top-50 start-50 translate-middle">
+    <div class="card-body ">
+      <h2 class="text-center">Sign up</h2>
+      <div class="mb-3">
+        <%= f.label :email, class: "form-label", for: "exampleInputEmail1" %><br />
+        <%= f.email_field :email, class: "form-control", id: "exampleInputEmail1", autofocus: true, autocomplete: "email" %>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password, class: "form-label", for: 'exampleInputPassword1' %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', type: "password", id: "exampleInputPassword1" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "confirm-password", class: 'form-control', type: "password", id: "exampleInputPassword1" %>
+      </div>
+
+      <div style="padding-left: 0%;" class="mb-3 form-check d-flex justify-content-between">
+        <%= f.submit "Sign up", class: 'btn btn-primary', style: "width: 135px;" %>
+        <%= link_to 'Log in', new_user_session_path, class: 'btn btn-primary', style: "width: 135px;" %>
+      </div>
+    </div>
+  </div>
+<% end %>

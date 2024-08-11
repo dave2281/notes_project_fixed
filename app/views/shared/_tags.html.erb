@@ -1,5 +1,6 @@
 <% tag_list = [] %>
 
+
 <div class="container">
   <div class="row">
     <div class="col text-start"> <!-- Класс text-start выравнивает текст кнопки влево -->
@@ -20,7 +21,11 @@
   <div class="offcanvas-body">
     <div class="container text-center">
       <div class="row row-cols-2">
-
+        <% tags.each do |tag| %>
+          <ul class="list-group">
+            <%= link_to tag, show_by_tag_path(tag: tag), class: 'list-group-item btn btn-light mb-2'%>
+          </ul>
+        <% end %>
       </div>
     </div>
   </div>

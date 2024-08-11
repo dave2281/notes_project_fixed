@@ -1,39 +1,38 @@
-<%= form_with(model: note) do |form| %>
-  <% if note.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(note.errors.count, "error") %> prohibited this note from being saved:</h2>
-
+<%= form_with(model: @note) do |form| %>
+  <% if @note.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@note.errors.count, "error") %> prohibited this note from being saved:</h2>
       <ul>
-        <% note.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% @note.errors.each do |attribute, message| %>
+          <li><%= "#{attribute.to_s.humanize} #{message}" %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :color, style: "display: block" %>
-    <%= form.text_field :color %>
-  </div>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :text, style: "display: block" %>
-    <%= form.text_field :text %>
-  </div>
-
-  <div>
-    <%= form.label :tags, style: "display: block" %>
-    <%= form.text_field :tags %>
-  </div>
-
   <%= form.hidden_field :user_id, value: current_user.id %>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group mx-3 my-3">
+    <%= form.label :color %>
+    <%= form.select :color, %w[black red blue green] %>
+  </div>
+
+  <div class="form-group mx-3 my-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group mx-3 my-3">
+    <%= form.label :text, class: "form-label" %>
+    <%= form.text_area :text, class: "form-text-area", rows: 17, cols: 200 %>
+  </div>
+
+  <div class="form-group mx-3 my-3">
+    <%= form.label :tags, class: "form-label" %>
+    <%= form.text_field :tags, class: "form-control", placeholder: "#tag #another-tag #more-tags" %>
+  </div>
+
+  <div class="form-group mx-3 mt-3">
+    <%= form.submit "Submit", class: "btn btn-primary my-3" %> <%= link_to "Back to notes", authenticated_root_path, class: 'btn btn-primary' %>
   </div>
 <% end %>

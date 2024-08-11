@@ -74,3 +74,5 @@ gem "bootstrap"
 gem "sass-rails"
 gem 'importmap-rails'
 
+
+gem "tinymce-rails", "~> 7.2"

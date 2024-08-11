@@ -1,0 +1,12 @@
+toolbar:
+    - styleselect | bold italic | undo redo
+    - advlist | charmap | print | preview | hr | anchor | pagebreak
+plugins:
+    - advlist
+    - list
+    - charmap
+    - print
+    - preview
+    - hr
+    - anchor
+    - pagebreak

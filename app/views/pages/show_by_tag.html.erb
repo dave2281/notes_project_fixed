@@ -5,62 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>
-<% if alert.present? %>
-  <p class="alert alert-danger"><%= alert %></p>
-<% end %>
+  <body>
+  <% if alert.present? %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
 
-<%= render 'partials/navbar' %>
+  <%= link_to "New note", new_note_path, class: "btn btn-primary rounded-3 h-auto w-auto mx-2 my-2"  %>
 
-<%= link_to "New note", new_note_path, class: "btn btn-primary rounded-3 h-auto w-auto mx-2 my-2"  %>
+  <h1 class="text-center">Notes with tag:</h1>
+  <h1 class="text-center"><%= @tag %></h1>
 
-<h1 class="text-center">Notes with tag:</h1>
-<h1 class="text-center"><%= @tag %></h1>
+    <div style="margin-right: 0; margin-left: auto;" class="row row-cols-1 row-cols-md-4 g-2 mb-3 mt-2">
+      <% @notes.each do |note| %>
+        <% if note.user_id == current_user.id %>
+          <div class="col">
+            <div class="card rounded-3 h-auto w-auto mx-2 my-2">
+              <div class="card-body">
+                <h3 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%; color:<%= note.color %>;"><%= note.title %></h3>
+                <p class="card-text markdown-preview" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;"><%= sanitize(note.text, tags: %w(strong em br)) %></p>
 
-<div style="margin-right: 0; margin-left: auto;" class="row row-cols-1 row-cols-md-4 g-2 mb-3 mt-2">
-  <% @notes.each do |note| %>
-    <% if note.user_id == current_user.id %>
-      <div class="col">
-        <div class="card rounded-3 h-auto w-auto mx-2 my-2">
-          <div class="card-body">
-            <h3 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%; color:<%= note.color %>;"><%= note.title %></h3>
-            <p class="card-text markdown-preview" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;"><%= sanitize(note.text, tags: %w(strong em br)) %></p>
+                <p class="tags" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;"><%= tags_fixer(note) %></p>
 
-            <% tags = note.tags %>
-            <p class="tags" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;">#<%= tags.join(' #') %></p>
-
-            <div class="d-flex justify-content-between">
-              <%= link_to 'Edit Note', edit_note_path(note), class: 'text-decoration-none text-body-secondary' %> <%= link_to 'Delete note', note_path(note), class: "text-decoration-none text-body-secondary", method: :delete, data: { confirm: 'Are you sure?' } %>
+                <div class="d-flex justify-content-between">
+                  <%= link_to 'Edit Note', edit_note_path(note), class: 'text-decoration-none text-body-secondary' %> <%= link_to 'Delete note', note_path(note), class: "text-decoration-none text-body-secondary", method: :delete, data: { confirm: 'Are you sure?' } %>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
-
-<style>
-    .container {
-        flex: 1; /* Растягиваем контейнер, чтобы он занимал всю доступную высоту */
-    }
-
-    footer {
-        background-color: rgb(248, 249, 251);
-        color: grey;
-        padding: 20px;
-        padding-top: 34px;
-        padding-bottom: 32px;
-        margin-top: 18%;
-        text-align: center;
-    }
-
-    p {
-        margin-bottom: 0%;
-    }
-</style>
-
-<footer>
-  <p class="text-center">&copy; 2024 Notes</p>
-</footer>
-</body>
+        <% end %>
+      <% end %>
+    </div>
+  </body>
 </html>

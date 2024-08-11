@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_note, only: %i[ show edit update destroy ]
+  before_action :set_note, only: %i[ edit update destroy ]
 
   # GET /notes or /notes.json
   def index
@@ -15,7 +15,7 @@ class NotesController < ApplicationController
   # GET /notes/1/edit
   def edit
     unless current_user.id == @note.user_id
-      redirect_to notes_url, alert: "You don't have permission to edit this note.""'"
+      redirect_to notes_url, alert: "You don't have permission to edit this note."
     end
   end
 
@@ -49,8 +49,8 @@ class NotesController < ApplicationController
 
   # DELETE /notes/1 or /notes/1.json
   def destroy
-    @note.destroy!
-
+    @note = Note.find(params[:id])
+    @note.destroy
     respond_to do |format|
       format.html { redirect_to notes_url, notice: "Note was successfully destroyed." }
       format.json { head :no_content }
@@ -58,6 +58,7 @@ class NotesController < ApplicationController
   end
 
   private
+
   def set_note
     @note = Note.find(params[:id])
   end

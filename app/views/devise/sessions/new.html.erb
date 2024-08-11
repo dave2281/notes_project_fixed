@@ -1,0 +1,36 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <% if alert.present? %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
+  <div class="card position-absolute bg-light top-50 start-50 translate-middle">
+    <p class="text-center fs-2 fw-bolder">Log in</p>
+    <div class="card-body ">
+      <div class="mb-3">
+        <%= f.label :email, class: "form-label", for: "exampleInputEmail1" %>
+        <%= f.email_field :email, class: "form-control", id: "exampleInputEmail1", autofocus: true, autocomplete: "email" %>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password, class: "form-label", for: 'exampleInputPassword1'%><br />
+        <%= f.password_field :password, autocomplete: "current-password", class: 'form-control', type: "password", id: "exampleInputPassword1" %>
+      </div>
+
+      <div class="mb-3">
+        <% if devise_mapping.rememberable? %>
+          <div class="form-check">
+            <%= f.check_box :remember_me, class: 'form-check-input', id: 'flexCheckDefault' %>
+            <%= f.label :remember_me, class: 'form-check-label', for: "flexCheckDefault" %>
+          </div>
+        <% end %>
+      </div>
+
+      <div style="margin-top: 10px;" class="mb-3 form-check">
+        <%= f.submit "Submit", class: 'btn btn-primary' %>
+      </div>
+
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+<% end %>
+

@@ -1,21 +1,20 @@
 <style>
-    .container {
-        flex: 1; /* Растягиваем контейнер, чтобы он занимал всю доступную высоту */
+    /* Sticky Footer Classes */
+
+    html,
+    body {
+        height: 100%;
     }
 
-    footer {
-        background-color: rgb(248, 249, 251);
-        color: grey;
-        padding: 20px;
-        padding-top: 15px;
-        text-align: center;
-    }
-
-    p {
-        margin-bottom: 0%;
+    #page-content {
+        flex: 1 0 auto;
+        margin-top: 270px;
     }
 </style>
-
-<footer>
-  <p class="text-center">&copy; 2024 Notes</p>
-</footer>
+<div id="page-content" class="container">
+    <footer id="sticky-footer" style="border-radius: 10px" class="flex-shrink-0 py-4 bg-light text-black-50">
+      <div class="container text-center">
+        <small>Copyright &copy; Your Website</small>
+      </div>
+    </footer>
+</div>

@@ -1,14 +1,21 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :notes, only: [:index, :new, :create, :edit, :update, :destroy] do
+    get 'delete', to: 'notes#destroy'
+  end
+
+  get 'pages/show_by_tag/:tag', to: 'pages#show_by_tag', as: 'show_by_tag'
   devise_for :users
-  resources :notes
-  root 'pages#home'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_scope :user do
+    authenticated :user do
+      root to: 'pages#home', as: :authenticated_root
+    end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+    unauthenticated do
+      root to: 'devise/sessions#new', as: :unauthenticated_root
+    end
+
+    get 'users/sign_out' => "devise/sessions#destroy"
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end

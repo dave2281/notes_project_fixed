@@ -8,13 +8,13 @@
               <h3 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%; color:<%= note.color %>;"><%= note.title %></h3>
               <p class="card-text markdown-preview" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;"><%= sanitize(note.text, tags: %w(strong em br)) %></p>
               <% if note.tags.present? %>
-                <p class="tags" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;">#<%= tags_fixer(note) %></p>
+                <p class="tags" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;"><%= tags_fixer(note) %></p>
               <% else %>
                 <p class="tags" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%;">No tags</p>
               <% end %>
 
               <div class="d-flex justify-content-between">
-                <%= link_to 'Edit Note', edit_note_path(note), class: 'text-decoration-none text-body-secondary' %> <%= link_to 'Delete note', note_path(note), class: "text-decoration-none text-body-secondary", method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to 'Edit Note', edit_note_path(note), class: 'text-decoration-none text-body-secondary' %> <%= link_to "Delete profile", note, class: "text-decoration-none text-body-secondary", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
               </div>
             </div>
           </div>
