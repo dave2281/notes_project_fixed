@@ -4,5 +4,10 @@ import "./controllers"
 import "bootstrap"
 import "./tinymce_init"
 import { UJS } from "@rails/ujs";
+//= require ace-rails-ap
+//= require ace/theme-tomorrow
+//= require ace/mode-markdown
+//= require ace/ext-language_tools
+//= require bootstrap-markdown-editor
 
 UJS.start();

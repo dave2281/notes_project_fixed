@@ -69,10 +69,10 @@ group :test do
   gem "selenium-webdriver"
 end
 
+gem 'bootstrap-sass'
 gem "devise", "~> 4.9"
-gem "bootstrap"
 gem "sass-rails"
 gem 'importmap-rails'
 
-
-gem "tinymce-rails", "~> 7.2"
+gem 'ace-rails-ap'
+gem 'bootstrap-markdown-editor-rails'
