@@ -21,14 +21,22 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git libvips node-gyp pkg-config python-is-python3
 
-# Install JavaScript dependencies
-ARG NODE_VERSION=18.19.0
+# Install JavaScript dependencies using nvm
+ARG NODE_VERSION=22.6.0
 ARG YARN_VERSION=1.22.21
-ENV PATH=/usr/local/node/bin:$PATH
-RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+ENV NVM_DIR=/usr/local/nvm
+ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# Install nvm and the specified Node.js version
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
+    . $NVM_DIR/nvm.sh && \
+    nvm install $NODE_VERSION && \
     npm install -g yarn@$YARN_VERSION && \
-    rm -rf /tmp/node-build-master
+    nvm use $NODE_VERSION
+
+# Verifies the right Node.js and npm versions are in the environment
+RUN node -v # should print `v22.6.0` \
+    && npm -v # should print `10.8.2`
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
