@@ -13,7 +13,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -21,7 +20,7 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git libvips node-gyp pkg-config python-is-python3
 
-# Install JavaScript dependencies using nvm
+# Define environment variables
 ARG NODE_VERSION=22.6.0
 ARG YARN_VERSION=1.22.21
 ENV NVM_DIR=/usr/local/nvm
@@ -29,14 +28,7 @@ ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install nvm and the specified Node.js version
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
-    . $NVM_DIR/nvm.sh && \
-    nvm install $NODE_VERSION && \
-    npm install -g yarn@$YARN_VERSION && \
-    nvm use $NODE_VERSION
-
-# Verifies the right Node.js and npm versions are in the environment
-RUN node -v # should print `v22.6.0` \
-    && npm -v # should print `10.8.2`
+    bash -c ". $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use $NODE_VERSION && npm install -g yarn@$YARN_VERSION && node -v && npm -v"
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -56,7 +48,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
 
 # Final stage for app image
 FROM base
