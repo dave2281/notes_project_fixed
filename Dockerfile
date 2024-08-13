@@ -11,9 +11,8 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
-    NVM_DIR="/usr/local/nvm" \
-    PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
+    BUNDLE_WITHOUT="development"
+
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -22,21 +21,18 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git libvips node-gyp pkg-config python-is-python3
 
-# Define Node.js version
-ARG NODE_VERSION=22.6.0
+# Install JavaScript dependencies
+ARG NODE_VERSION=18.19.0
 ARG YARN_VERSION=1.22.21
-
-# Install nvm and the specified Node.js version
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
-    bash -c "source $NVM_DIR/nvm.sh && \
-    nvm install $NODE_VERSION && \
-    nvm use $NODE_VERSION && \
+ENV PATH=/usr/local/node/bin:$PATH
+RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
+    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
     npm install -g yarn@$YARN_VERSION && \
-    node -v && npm -v"
+    rm -rf /tmp/node-build-master
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --jobs 4 --retry 3 && \
+RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
@@ -52,6 +48,7 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
 
 # Final stage for app image
 FROM base
