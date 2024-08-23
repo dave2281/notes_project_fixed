@@ -73,6 +73,3 @@ gem 'bootstrap-sass'
 gem "devise", "~> 4.9"
 gem "sass-rails"
 gem 'importmap-rails'
-
-gem 'ace-rails-ap'
-gem 'bootstrap-markdown-editor-rails'
