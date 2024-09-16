@@ -23,16 +23,13 @@ RUN apt-get update -qq && apt-get install --no-install-recommends -y \
   git \
   libvips \
   nodejs \
+  npm \
   postgresql-client \
   && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Установка Node.js и Yarn для JavaScript зависимостей
-ARG NODE_VERSION=20.5.0
+# Установка Yarn вручную, так как установка через `npm` не удалась
 ARG YARN_VERSION=1.22.21
-RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install -g yarn@$YARN_VERSION && \
-    rm -rf /var/lib/apt/lists/*
+RUN npm install -g yarn@$YARN_VERSION
 
 # Копирование Gemfile и установка зависимостей через Bundler
 COPY Gemfile Gemfile.lock ./
