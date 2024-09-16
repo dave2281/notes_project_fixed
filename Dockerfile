@@ -14,7 +14,12 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y \
+        curl \
+        libjemalloc2 \
+        libvips \
+        sqlite3 \
+        libpq-dev && \   # Добавлено для поддержки PostgreSQL
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -28,9 +33,13 @@ FROM base AS build
 
 # Install packages needed to build gems and jsbundling
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config curl && \
-    curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs yarn && \
+    apt-get install --no-install-recommends -y \
+        build-essential \
+        git \
+        pkg-config \
+        curl \
+        nodejs \
+        yarn && \    # Добавлен для поддержки JavaScript
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
