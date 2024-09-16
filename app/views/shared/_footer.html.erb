@@ -8,13 +8,15 @@
 
     #page-content {
         flex: 1 0 auto;
-        margin-top: 270px;
+        margin-top: 260px;
     }
 </style>
 <div id="page-content" class="container">
     <footer id="sticky-footer" style="border-radius: 10px" class="flex-shrink-0 py-4 bg-light text-black-50">
       <div class="container text-center">
-        <small>Copyright &copy; Your Website</small>
+        <small>Copyright &copy; notes.rubydevelopers.org </small>
+        <br>
+        <small>Registered users: <%= User.all.count %></small>
       </div>
     </footer>
 </div>
